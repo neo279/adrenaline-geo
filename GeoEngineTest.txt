@@ -1,15 +1,35 @@
 program main;
 
 uses
-  geoengine;
+  geoengine, sysutils;
+
+{$IFDEF FPC}
+  procedure print(s: string);
+  begin
+  	writeln(s);
+  end;
+{$ENDIF}
 
 var
-  g: GeoEngine;
+  g: PGeoEngine;
+  p: TGeoPath;
+  i: integer;
 begin
-  g := geo_engine('http://localhost:8080/canSeeTarget');
+  g := geo_engine('http://localhost:8080');
 
-  print(geo_can_see_target(g, -80733, 149886, -3040, -84540, 150879, -3120));
-  print(geo_can_see_target(g, -80733, 149886, -3040, -80997, 150366, -3040));
+  print(IntToStr(sizeof(TGeoPath)));
+
+  print(IntToStr(geo_can_see_target(g, -80733, 149886, -3040, -84540, 150879, -3120)));
+  print(IntToStr(geo_can_see_target(g, -80733, 149886, -3040, -80997, 150366, -3040)));
+
+  print(IntToStr(geo_find_path(g, @p, -80733, 149886, -3040, -84540, 150879, -3120)));
+
+  print(IntToStr(p.size));  
+  for i := 0 to p.size-1 do begin
+  	print(IntToStr(p.arr[i].X)); 
+  end;
+
+  geo_path_destroy(@p);
 
   geo_destroy(g);
 end.

@@ -3,12 +3,30 @@ unit GeoEngine;
 interface
 
 type
-  GeoEngine = pointer;
+  PGeoEngine = pointer;
 
-function geo_engine(const n: PWideChar): GeoEngine; cdecl; external 'adrenaline_geo.dll';
-procedure geo_destroy(engine: GeoEngine); cdecl; external 'adrenaline_geo.dll';
-function geo_can_see_target(engine: GeoEngine; x, y, z, tx, ty, tz: integer): shortint;
+  TGeoPoint = packed record
+    X, Y, Z: longint;
+  end;
+  PGeoPoint = ^TGeoPoint;
+
+  TGeoPath = packed record
+    arr: PGeoPoint;
+    size: Longword;
+  end;
+
+  PGeoPath = ^TGeoPath;
+
+function geo_engine(const n: PWideChar): PGeoEngine; cdecl; external 'adrenaline_geo.dll';
+function geo_can_see_target(engine: PGeoEngine; x, y, z, tx, ty, tz: longint): shortint;
   cdecl; external 'adrenaline_geo.dll';
+
+function geo_find_path(engine: PGeoEngine; path: PGeoPath; x, y, z, tx, ty, tz: longint): shortint;
+  cdecl; external 'adrenaline_geo.dll';
+
+procedure geo_destroy(engine: PGeoEngine); cdecl; external 'adrenaline_geo.dll';
+procedure geo_path_destroy(path: PGeoPath); cdecl; external 'adrenaline_geo.dll';
+
 
 implementation
 

@@ -28,4 +28,12 @@ rustup run stable-i686-pc-windows-msvc cargo build
 
 Library needs to be build for 32bit target!
 
+## Testing
+
+```
+cargo build
+copy target\debug\adrenaline_geo.dll .
+fpc GeoEngineTest.txt && GeoEngineTest.exe
+```
+
 This repository is mostly for educational purpurose.
