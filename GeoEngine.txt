@@ -11,7 +11,7 @@ type
   PGeoPoint = ^TGeoPoint;
 
   TGeoPath = packed record
-    arr: PGeoPoint;
+    arr: array of TGeoPoint;
     size: Longword;
   end;
 
