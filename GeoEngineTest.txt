@@ -1,0 +1,15 @@
+program main;
+
+uses
+  geoengine;
+
+var
+  g: GeoEngine;
+begin
+  g := geo_engine('http://localhost:8080/canSeeTarget');
+
+  print(geo_can_see_target(g, -80733, 149886, -3040, -84540, 150879, -3120));
+  print(geo_can_see_target(g, -80733, 149886, -3040, -80997, 150366, -3040));
+
+  geo_destroy(g);
+end.

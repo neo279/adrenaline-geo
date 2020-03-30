@@ -1,0 +1,30 @@
+name: Rust
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set i686 (32bit) target
+      run: rustup default stable-i686-pc-windows-msvc
+    - name: Cache Rust dependencies
+      uses: actions/cache@v1
+      with:
+        path: target
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/Cargo.toml') }}
+        restore-keys: |
+          ${{ runner.OS }}-build-
+    - name: Build
+      run: cargo build --verbose --release
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Release
+      run: env GH_TOKEN=${{ secrets.GITHUB_TOKEN }} npx semantic-release

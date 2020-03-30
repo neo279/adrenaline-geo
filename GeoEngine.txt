@@ -1,0 +1,16 @@
+unit GeoEngine;
+
+interface
+
+type
+  GeoEngine = pointer;
+
+function geo_engine(const n: PWideChar): GeoEngine; cdecl; external 'adrenaline_geo.dll';
+procedure geo_destroy(engine: GeoEngine); cdecl; external 'adrenaline_geo.dll';
+function geo_can_see_target(engine: GeoEngine; x, y, z, tx, ty, tz: integer): shortint;
+  cdecl; external 'adrenaline_geo.dll';
+
+implementation
+
+begin
+end.
